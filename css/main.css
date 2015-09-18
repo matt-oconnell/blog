@@ -858,7 +858,7 @@ body {
     margin: 0 -10px;
     padding: 0 10px;
     clear: both;
-    z-index: 2;
+    z-index: 1;
     border-top: 1px solid #ddd;
   }
 }
@@ -1061,7 +1061,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a13e99;
+  background: #a7ff22;
 }
 .sidebar-nav {
   margin: 0;
