@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="Functions,Javascript," />
+  <meta name="keywords" content="Databases,MongoDB,NoSQL," />
 
 
 
@@ -39,22 +39,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
+<meta name="description" content="Below, I’m going to attempt to sum up some of the points Martin Fowler made in his Introduction to NoSQL talk at the GOTO Aarhus Conference 2012, mostly to hammer these concepts into my own forgetful">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Defining Functions in Javascript">
-<meta property="og:url" content="http://yoursite.com/2015/09/18/defining-functions/index.html">
+<meta property="og:title" content="The Rise of NoSQL">
+<meta property="og:url" content="http://yoursite.com/2015/09/21/NoSQL/index.html">
 <meta property="og:site_name" content="Matt O'Connell: Blog">
-<meta property="og:description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
-<meta property="og:updated_time" content="2015-09-18T18:48:19.000Z">
+<meta property="og:description" content="Below, I’m going to attempt to sum up some of the points Martin Fowler made in his Introduction to NoSQL talk at the GOTO Aarhus Conference 2012, mostly to hammer these concepts into my own forgetful">
+<meta property="og:updated_time" content="2015-09-21T14:59:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Defining Functions in Javascript">
-<meta name="twitter:description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
+<meta name="twitter:title" content="The Rise of NoSQL">
+<meta name="twitter:description" content="Below, I’m going to attempt to sum up some of the points Martin Fowler made in his Introduction to NoSQL talk at the GOTO Aarhus Conference 2012, mostly to hammer these concepts into my own forgetful">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -64,7 +58,7 @@ Function Expression:123var example =">
   };
 </script>
 
-  <title> Defining Functions in Javascript | Matt O'Connell: Blog </title>
+  <title> The Rise of NoSQL | Matt O'Connell: Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -171,7 +165,7 @@ Function Expression:123var example =">
           
           
             
-              Defining Functions in Javascript
+              The Rise of NoSQL
             
           
         </h1>
@@ -180,8 +174,8 @@ Function Expression:123var example =">
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2015-09-18T10:09:13-04:00" content="2015-09-18">
-            2015-09-18
+          <time itemprop="dateCreated" datetime="2015-09-21T10:36:09-04:00" content="2015-09-21">
+            2015-09-21
           </time>
         </span>
 
@@ -214,12 +208,32 @@ Function Expression:123var example =">
       
 
       
-        <span itemprop="articleBody"><p>There are several ways to define a function in JavaScript. We’ll take a look at a few here.</p>
-<p>Function Declaration:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Function Expression:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> example = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Both examples do pretty much the same thing with one subtle difference. The function declaration is not included in the regular control flow. They are hoisted to the top of whatever scope they reside in. This means you can call the function before it’s written in your code.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex1();</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ex1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex2();</span><br><span class="line"><span class="comment">// Uncaught TypeError: ex2 is not a function</span></span><br><span class="line"><span class="keyword">var</span> ex2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>What’s happening here? The variable <code>ex2</code> is actually getting hoisted to the top of it’s scope, similarly to a function. But, the contents of the variable do not get hoisted. The environment is recognizing <code>ex2</code> as an undefined value.</p>
+        <span itemprop="articleBody"><p>Below, I’m going to attempt to sum up some of the points Martin Fowler made in his Introduction to NoSQL talk at the GOTO Aarhus Conference 2012, mostly to hammer these concepts into my own forgetful brain. Fowler, who started developing software in the 80s, has written several notable books on topics including, but not limited to refactoring, application architecture, and NoSQL. <a href="https://youtu.be/qI_g07C_Q5I" target="_blank" rel="external">Here is a link</a> to the talk.</p>
+<h3 id="Problems_with_SQL">Problems with SQL</h3><p>One of the central problems with relational databases is the “Object-Relational Impedance Mismatch.” Simply put, there is a gap between object-oritented design principles and databases. It’s difficult to map objects to databases. We can have a logical, cohesive user interface that makes perfect sense to the human eye, but when we try and store all this data, we are forced to split it up into a bunch of different tables linked together by relations.</p>
+<p>Wouldn’t it be so much simpler to take the object and just drop it directly into the database? In the mid-90s, some smart people attempted to push the idea of Object Oriented Databases that would do just this. Unfortunately, the databases in place were overwhelmingly relational and the integration process ultimately prevented the OO databases from ever gaining significant traction. So instead of a complete paradigm shift, developers formed abstraction layers between relational databases and OO code bases called Object Relational Models. With these, large corporations that had invested heavily in storing their data in a relational way did not have to pay the high costs of migration from one database type to another. Developers could code their OO apps and companies didn’t have to mess with their data stores. Everyone was happy-ish.</p>
+<h3 id="What_Changed?">What Changed?</h3><p>As the early 2000s rolled around and the internet rose to prominence, software engineers faced a new set of challenges. Thousands of people were accessing websites simultaneously and developers scrambled to allow levels of scalability within their websites that could handle the traffic. One option was to increase their server size. Just buy a bigger box. SQL was designed for this. But this was expensive and provided provided room for a relatively small number of failure points, so companies like Google and Amazon began experimenting with alternate solutions. How about buying a bunch of little boxes instead and spreading all this data out? Fowler mentioned that engineers whom he spoke with who had tried making relational databases work across this type of distributed system often described the process using the phrase: “unnatural acts.” Ultimately, this led to the advent of the NoSQL databases.</p>
+<p>NoSQL is a term that was coined as a Twitter hashtag for an early conference focused on such languages. It eventually just stuck. Fowler describes a set of common characteristics of NoSQL databases:</p>
+<ul>
+<li>Non-relational</li>
+<li>Open Source</li>
+<li>Cluster-friendly</li>
+<li>Works with 21st century website environments</li>
+<li>No Set Schema</li>
+</ul>
+<h3 id="Data_Model">Data Model</h3><p>When he says “no set schema,” he clarifies that there still ends up being an implicit schema when queries are made. If a query is made for an order, it may expect an order number and price. This implies a schema exists. This implicit schema still needs to be managed.</p>
+<p>Mongodb.com defines these as “dynamic schema.” In an agile development environment, it’s common to have to alter database schemas frequently as new features are added. “There’s also no way, using a relational database, to effectively address data that’s completely unstructured or unknown in advance.”</p>
+<h3 id="Benefits">Benefits</h3><p>Relational databases naturally scale vertically. They require a single server to grow as the data volume grows. NoSQL DBs are designed to scale horizontally, often by supporting auto-sharding, load balancing, and/or automatic replication. Data can be spread among many cheap servers without the application needing to be aware of what’s going on behind the scenes.</p>
+<h3 id="Aggregate_Oriented">Aggregate Oriented</h3><p>The aggregate in Fowler’s words is often the highest-level “object” we are manipulating. In a document-focused DB like MongoDB, the aggregate would be the document. It is a single unit that we move back and forth from database to application. There is a type of NoSQL database that is not aggregate-oriented (graph) but I’m not going to get into that here.</p>
+<h3 id="NoSQL_and_Consistency">NoSQL and Consistency</h3><p>Consistency is the idea that when multiple people are accessing and making changes to a database, the data will remain consistent. Customer A should not be able to make a change to Product A while Customer B makes a different change at the same time, effectually overwriting Customer A’s. NoSQL databases are arguably weaker in this area compared to their relational counterparts. They have often been described as “eventually consistent.”</p>
+<p>Fowler talks about an “offline lock” system to be used in such cases. Each data record or aggregate gets a version stamp. When a user retrieves this record, they also receive the stamp. If the user manipulates it and attempts to post back to the db and there is a version mismatch, they’ll receive an error. The version mismatch would be caused by another user updating the same record prior.</p>
+<p>This type of consistency is “logical consistency.” It applies whether the data is on one server or distributed across many. Sharding data, or taking a copy of the data and splitting into shards on several machines brings up logical consistency problems.</p>
+<p>Replicating data, or copying the same piece of data across multiple machines brings up different problems. It’s advantageous in terms of <em>performance</em>, i.e. more nodes handling the same request and <em>resilience</em>, i.e. if one node goes down, other nodes keep going. But, what happens if two people are making a request on a distributed DB and the communication line between the replicated DBs goes down? We can deny both requests and tell the users, “Sorry, there’s been an error with the network.” In this case, we ensure we aren’t going to run into data consistency issues but are giving the user a bad experience. <em>Or</em>, we can accept both requests and leave it up to the business to deal with it later down the line. For example, two people book the same room because of this and the hotel eventually just moves one of them into an alternate room. So essentially it’s a choice between consistency (1st option) and availability/response time, the latter of which says “Yes, I’ll keep going at the risk of introducing inconsistent data.” The more consistency you want, the more nodes have to communicate which can lead to a more expensive and slower operation. Fowler argues that this decision should ultimately be left up to the business.</p>
+<h3 id="When_and_why_you’d_want_to_use_NoSQL">When and why you’d want to use NoSQL</h3><ul>
+<li>You’ve got to deal with large amounts of data.</li>
+<li>You want to develop quickly.</li>
+<li>You need to deal with analytics, i.e. pulling data from a wide variety of sources (excel, log files) with different structures.</li>
+</ul>
+<h3 id="Is_NoSQL_the_future?">Is NoSQL the future?</h3><p>Fowler believes the future lies in “polyglot persistence.” He thinks there will be room for many different types of DBs and it will be up to the developer to determine which is appropriate for the problem at hand.</p>
 </span>
       
     </div>
@@ -228,9 +242,11 @@ Function Expression:123var example =">
       
         <div class="post-tags">
           
-            <a href="/tags/Functions/" rel="tag">#Functions</a>
+            <a href="/tags/Databases/" rel="tag">#Databases</a>
           
-            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+            <a href="/tags/MongoDB/" rel="tag">#MongoDB</a>
+          
+            <a href="/tags/NoSQL/" rel="tag">#NoSQL</a>
           
         </div>
       
@@ -239,11 +255,11 @@ Function Expression:123var example =">
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/18/TypeConversion/" rel="prev">Javascript Type Conversion</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/18/TypeConversion/" rel="next">Javascript Type Conversion</a>
             
           </div>
         </div>
@@ -361,7 +377,7 @@ Function Expression:123var example =">
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problems_with_SQL"><span class="nav-number">1.</span> <span class="nav-text">Problems with SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What_Changed?"><span class="nav-number">2.</span> <span class="nav-text">What Changed?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data_Model"><span class="nav-number">3.</span> <span class="nav-text">Data Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Benefits"><span class="nav-number">4.</span> <span class="nav-text">Benefits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregate_Oriented"><span class="nav-number">5.</span> <span class="nav-text">Aggregate Oriented</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL_and_Consistency"><span class="nav-number">6.</span> <span class="nav-text">NoSQL and Consistency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When_and_why_you’d_want_to_use_NoSQL"><span class="nav-number">7.</span> <span class="nav-text">When and why you’d want to use NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Is_NoSQL_the_future?"><span class="nav-number">8.</span> <span class="nav-text">Is NoSQL the future?</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
