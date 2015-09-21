@@ -427,6 +427,99 @@
 
 
     
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/16/Complexity/" itemprop="url">
+                Big O and Time Complexity
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-09-16T12:04:12-04:00" content="2015-09-16">
+            2015-09-16
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><code>O(f(x))</code> is a mathematical term. “O” means order, as in “order of complexity” and big means… big (“O” not “o”.)</p>
+<p>Big O notation allows us to analyze algorithms in an abstract fashion. It falls under the umbrella of <em>complexity analysis</em>. Most programming languages have a set of tools (such as profilers) that can measure the time it takes to run a particular chunk of code down to the millisecond. Big O is, by definition, a measure of our algorithm’s total number of machine calculations as we increase the input value towards infinity. It excludes coefficients and lower order terms. It is not a way to determine the exact time a process will take to complete in a certain language, but rather a higher level measurement of how complex an algorithm is.</p>
+<p>Simply put:</p>
+<blockquote>
+<p>Complexity analysis explains how an algorithm will behave as it’s input grows</p>
+</blockquote>
+<p>We’re interested in our algorithm’s behavior as <code>n</code> tends towards <code>infinity</code>. The way we analyze this in computer science differs from how one would formally analyze <code>O(f(x))</code> in mathematics. In mathematics we would include coefficients, constants, and lower order terms. For example:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
+<p>Is filtered down in comp sci Big O notation to</p>
+<pre><code><span class="literal">f</span>(<span class="keyword">n</span>) = <span class="keyword">n</span>
+</code></pre><p>The idea behind this is that we want to isolate the parts of the function that will be effected by the growth of n. If we change n, does the constant 408 change? No. If we change n, does 10n behave differently than 20n would? No, not really. 20n would increase at the same linear rate as 10n, so overall, it’s behavior is the same. So we filter it down to a very basic level and say the function will change at a linear rate: <code>f(n) = n</code> which is expressed in Big O notation as <code>O(n)</code></p>
+<p>Another filter that is applied here by computer scientists and not mathematicians is to drop the terms that grow slowly and keep those that grow quickly as n increases. If we have a function <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt; + 10n + 408</code>, we will drop the constant and remove the multiplier 10 as we did before. But, we will also remove n from the leftover <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt; + n</code> since n will grow at a negligible rate compared to n<sup>2</sup>. What we are left with is <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt;</code>.</p>
+<p>Some examples of common Big O time complexity are:</p>
+<p><strong>O(1) - Constant Time</strong></p>
+<p>Total number of calculations stays the same no matter how large or small our input is</p>
+<p><strong>O(n) - Linear Time</strong><br>Total number of calculations grows linearly in relation to the input</p>
+<p><strong>O(n<sup>2</sup>) - Quadratic Time</strong><br>Time execution is proportional to the square of the input size</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -461,7 +554,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -475,7 +568,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>

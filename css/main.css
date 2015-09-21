@@ -596,7 +596,6 @@ td {
 }
 .post code {
   background: #eee;
-  text-shadow: 0 1px #fff;
   padding: 0 0.3em;
 }
 .post pre code {
@@ -1061,7 +1060,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2fd904;
+  background: #e481d9;
 }
 .sidebar-nav {
   margin: 0;
@@ -1994,4 +1993,7 @@ body {
 }
 .posts-expand .post-body .fancybox img {
   margin: 0 auto;
+}
+code {
+  font-size: 13px;
 }
