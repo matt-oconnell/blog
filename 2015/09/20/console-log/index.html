@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="Algorithms,Big O,Time Complexity," />
+  <meta name="keywords" content="Basics,Javascript,Nuggets," />
 
 
 
@@ -39,19 +39,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="O(f(x)) is a mathematical term. “O” means order, as in “order of complexity” and big means… big (“O” not “o”.)
-Big O notation allows us to analyze algorithms in an abstract fashion. It falls under the">
+<meta name="description" content="Console.log(‘?’);If you’re a javascript developer, console.log() is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s tool">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Big O and Time Complexity">
-<meta property="og:url" content="http://yoursite.com/2015/09/16/Complexity/index.html">
+<meta property="og:title" content="console.log ?">
+<meta property="og:url" content="http://yoursite.com/2015/09/20/console-log/index.html">
 <meta property="og:site_name" content="Matt O'Connell: Blog">
-<meta property="og:description" content="O(f(x)) is a mathematical term. “O” means order, as in “order of complexity” and big means… big (“O” not “o”.)
-Big O notation allows us to analyze algorithms in an abstract fashion. It falls under the">
-<meta property="og:updated_time" content="2015-09-21T16:26:30.000Z">
+<meta property="og:description" content="Console.log(‘?’);If you’re a javascript developer, console.log() is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s tool">
+<meta property="og:updated_time" content="2016-02-12T22:32:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Big O and Time Complexity">
-<meta name="twitter:description" content="O(f(x)) is a mathematical term. “O” means order, as in “order of complexity” and big means… big (“O” not “o”.)
-Big O notation allows us to analyze algorithms in an abstract fashion. It falls under the">
+<meta name="twitter:title" content="console.log ?">
+<meta name="twitter:description" content="Console.log(‘?’);If you’re a javascript developer, console.log() is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s tool">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -61,7 +58,7 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
   };
 </script>
 
-  <title> Big O and Time Complexity | Matt O'Connell: Blog </title>
+  <title> console.log ? | Matt O'Connell: Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -168,7 +165,7 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
           
           
             
-              Big O and Time Complexity
+              console.log ?
             
           
         </h1>
@@ -177,8 +174,8 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2015-09-16T12:04:12-04:00" content="2015-09-16">
-            2015-09-16
+          <time itemprop="dateCreated" datetime="2015-09-20T10:36:09-04:00" content="2015-09-20">
+            2015-09-20
           </time>
         </span>
 
@@ -211,23 +208,11 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
       
 
       
-        <span itemprop="articleBody"><p><code>O(f(x))</code> is a mathematical term. “O” means order, as in “order of complexity” and big means… big (“O” not “o”.)</p>
-<p>Big O notation allows us to analyze algorithms in an abstract fashion. It falls under the umbrella of <em>complexity analysis</em>. Most programming languages have a set of tools (such as profilers) that can measure the time it takes to run a particular chunk of code down to the millisecond. Big O is, by definition, a measure of our algorithm’s total number of machine calculations as we increase the input value towards infinity. It excludes coefficients and lower order terms. It is not a way to determine the exact time a process will take to complete in a certain language, but rather a higher level measurement of how complex an algorithm is.</p>
-<p>Simply put:</p>
-<blockquote>
-<p>Complexity analysis explains how an algorithm will behave as it’s input grows</p>
-</blockquote>
-<p>We’re interested in our algorithm’s behavior as <code>n</code> tends towards <code>infinity</code>. The way we analyze this in computer science differs from how one would formally analyze <code>O(f(x))</code> in mathematics. In mathematics we would include coefficients, constants, and lower order terms. For example:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
-<p>Is filtered down in comp sci Big O notation to</p>
-<pre><code><span class="literal">f</span>(<span class="keyword">n</span>) = <span class="keyword">n</span>
-</code></pre><p>The idea behind this is that we want to isolate the parts of the function that will be effected by the growth of n. If we change n, does the constant 408 change? No. If we change n, does 10n behave differently than 20n would? No, not really. 20n would increase at the same linear rate as 10n, so overall, it’s behavior is the same. So we filter it down to a very basic level and say the function will change at a linear rate: <code>f(n) = n</code> which is expressed in Big O notation as <code>O(n)</code></p>
-<p>Another filter that is applied here by computer scientists and not mathematicians is to drop the terms that grow slowly and keep those that grow quickly as n increases. If we have a function <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt; + 10n + 408</code>, we will drop the constant and remove the multiplier 10 as we did before. But, we will also remove n from the leftover <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt; + n</code> since n will grow at a negligible rate compared to n<sup>2</sup>. What we are left with is <code>f(n) = n&lt;sup&gt;2&lt;/sup&gt;</code>.</p>
-<p>Some examples of common Big O time complexity are:</p>
-<p><strong>O(1) - Constant Time</strong></p>
-<p>Total number of calculations stays the same no matter how large or small our input is</p>
-<p><strong>O(n) - Linear Time</strong><br>Total number of calculations grows linearly in relation to the input</p>
-<p><strong>O(n<sup>2</sup>) - Quadratic Time</strong><br>Time execution is proportional to the square of the input size</p>
+        <span itemprop="articleBody"><h3 id="Console-log(‘?’);">Console.log(‘?’);</h3><p>If you’re a javascript developer, <code>console.log()</code> is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s toolbox, many are unaware of how it processes inputs. This is likely due to the fact that it’s instroduced at such an early stage in many developers’ careers. As a note, I’m focusing primarily console.log’s output in the Chrome Inspector window. </p>
+<p>I’ve seen code similar to this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>');</span></span><br><span class="line"><span class="title">console</span>.log(<span class="typedef"><span class="keyword">data</span>);</span></span><br></pre></td></tr></table></figure></p>
+<p>that was implemented in order to avoid this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>' + <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span>[object <span class="type">Object</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>that could be displayed more succinctly using:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>', <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span> <span class="type">Object</span> <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p><code>console.log()</code> takes an infinite number of mixed parameters (could be of type string, array, object, function, etc.). <strong>But,</strong> if passed a parameter like <code>&#39;My data&#39; + data&#39;</code>, javascript will convert the <code>data</code> object into a string (<code>[object Object]</code>). Avoid this by using commas and passing strings in seperately from other data types.</p>
 </span>
       
     </div>
@@ -236,11 +221,11 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
       
         <div class="post-tags">
           
-            <a href="/tags/Algorithms/" rel="tag">#Algorithms</a>
+            <a href="/tags/Basics/" rel="tag">#Basics</a>
           
-            <a href="/tags/Big-O/" rel="tag">#Big O</a>
+            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
           
-            <a href="/tags/Time-Complexity/" rel="tag">#Time Complexity</a>
+            <a href="/tags/Nuggets/" rel="tag">#Nuggets</a>
           
         </div>
       
@@ -249,11 +234,11 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/18/defining-functions/" rel="prev">Defining Functions in Javascript</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/20/NoSQL/" rel="next">The Rise of NoSQL</a>
             
           </div>
         </div>
@@ -371,7 +356,7 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Console-log(‘?’);"><span class="nav-number">1.</span> <span class="nav-text">Console.log(‘?’);</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

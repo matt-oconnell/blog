@@ -166,8 +166,8 @@
           
           
             
-              <a class="post-title-link" href="/2016/02/12/test/" itemprop="url">
-                test
+              <a class="post-title-link" href="/2015/09/20/console-log/" itemprop="url">
+                console.log ?
               </a>
             
           
@@ -177,11 +177,26 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2016-02-12T15:39:31-05:00" content="2016-02-12">
-            2016-02-12
+          <time itemprop="dateCreated" datetime="2015-09-20T10:36:09-04:00" content="2015-09-20">
+            2015-09-20
           </time>
         </span>
 
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
         
 
         
@@ -197,7 +212,12 @@
 
       
         
-          <span itemprop="articleBody"></span>
+          <span itemprop="articleBody"><h3 id="Console-log(‘?’);">Console.log(‘?’);</h3><p>If you’re a javascript developer, <code>console.log()</code> is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s toolbox, many are unaware of how it processes inputs. This is likely due to the fact that it’s instroduced at such an early stage in many developers’ careers. As a note, I’m focusing primarily console.log’s output in the Chrome Inspector window. </p>
+<p>I’ve seen code similar to this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>');</span></span><br><span class="line"><span class="title">console</span>.log(<span class="typedef"><span class="keyword">data</span>);</span></span><br></pre></td></tr></table></figure></p>
+<p>that was implemented in order to avoid this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>' + <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span>[object <span class="type">Object</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>that could be displayed more succinctly using:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>', <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span> <span class="type">Object</span> <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p><code>console.log()</code> takes an infinite number of mixed parameters (could be of type string, array, object, function, etc.). <strong>But,</strong> if passed a parameter like <code>&#39;My data&#39; + data&#39;</code>, javascript will convert the <code>data</code> object into a string (<code>[object Object]</code>). Avoid this by using commas and passing strings in seperately from other data types.</p>
+</span>
         
       
     </div>
@@ -629,7 +649,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
