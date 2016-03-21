@@ -167,7 +167,7 @@
           
             
               <a class="post-title-link" href="/2016/03/21/command-line/" itemprop="url">
-                command-line
+                Bash Pipes vs. Redirects
               </a>
             
           
@@ -197,22 +197,19 @@
 
       
         
-          <span itemprop="articleBody"><p>#Bash Pipe <code>|</code> vs. Redirect <code>&gt;</code> or <code>&gt;&gt;</code></p>
-<p>These commands come in handy on a daily basis. At first, I ran into issues differentiating the two. I’ve documented some extra-simple examples of using both below.</p>
-<p>###Redirection <code>&gt;</code></p>
-<p>Bash interprets the symbols <code>&gt;</code> and <code>&gt;&gt;</code> as instructions to reroute a command’s input or output to or from a file.<br><code>&gt;</code> is used to pass output to either a <em>file</em> or <em>stream</em>.<br>The variation <code>&gt;&gt;</code> is used to <strong>append</strong> output to the end of a <em>file</em><br><em>Note:</em> we can also use <code>&lt;</code> to redirect in the alternate direction.</p>
+          <span itemprop="articleBody"><p>These commands come in handy on a daily basis. At first, I ran into issues differentiating the two. I’ve documented some extra-simple examples of using both below.</p>
+<h3 id="Redirection_&gt;">Redirection <code>&gt;</code></h3><p>Bash interprets the symbols <code>&gt;</code> and <code>&gt;&gt;</code> as instructions to reroute a command’s input or output to or from a file.<br><code>&gt;</code> is used to pass output to either a <strong>file</strong> or <strong>stream</strong>.<br>The variation <code>&gt;&gt;</code> is used to <em>append</em> output to the end of a <strong>file</strong><br><strong>Note:</strong> we can also use <code>&lt;</code> to redirect in the alternate direction.</p>
 <p>Here’s an example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">123</span>” &gt; test.txt</span><br><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">456</span>” &gt;&gt; test.txt</span><br></pre></td></tr></table></figure></p>
 <p>The first command takes the standard output from the <code>echo</code> command (in this case: “testing testing 123”) and points it to <code>test.txt</code>, overwriting any content that was currently in this file if the file currently exists or creating a new file consisting of this standard output.</p>
 <p>The second command takes the standard output from the <code>echo</code> command (in this case: “testing testing 456”) and appends it (note the double <code>&gt;&gt;</code>) to our <code>test.txt</code> file.</p>
 <p>Our file will now look like this:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testing testing <span class="number">123</span></span><br><span class="line">testing testing <span class="number">456</span></span><br></pre></td></tr></table></figure>
-<p>###Pipes <code>|</code></p>
-<p>To connect the standard output of one command to the standard input of another use the <code>|</code> symbol, commonly known as a <code>pipe</code>. Pipes are used to pass output to another <em>program</em> or <em>utility</em>. So, if we’re trying to connect the i/o of a command to another command, we’ll use the <code>|</code>. But, if we want to take the output from a command and write it to a <em>file</em> or <em>stream</em>, we’ll use a redirect <code>&gt;</code> or <code>&gt;&gt;</code>.</p>
+<h3 id="Pipes_|">Pipes <code>|</code></h3><p>To connect the standard output of one command to the standard input of another use the <code>|</code> symbol, commonly known as a <code>pipe</code>. Pipes are used to pass output to another <strong>program</strong> or <strong>utility</strong>. So, if we’re trying to connect the i/o of a command to another command, we’ll use the <code>|</code>. But, if we want to take the output from a command and write it to a <strong>file</strong> or <strong>stream</strong>, we’ll use a redirect <code>&gt;</code> or <code>&gt;&gt;</code>.</p>
 <p>Here’s how a <code>|</code> would work on our <code>test.txt</code> file:</p>
-<p><code>cat test.txt | grep 123</code></p>
-<p>This will read the newly altered <code>test.txt</code> and output the content. Instead of printing the output to the screen (like it would have done with <code>cat test.txt</code>, the output will be “piped” to the <code>grep</code> process input. Here we can see that <code>grep</code> accepts standard input if no files are specified as arguments (which we have not, we’ve only specified the pattern <code>123</code>.) The <code>grep</code> command will now search for <code>123</code> inside of the input that we’ve passed to it (which is the entire <code>test.txt</code> file) and will output the line:</p>
-<p><code>testing testing 123</code> </p>
-</span>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | grep 123</span><br></pre></td></tr></table></figure>
+<p>This will read the newly altered <code>test.txt</code> and output the content. Instead of printing the output to the screen (like it would have done with <code>cat test.txt</code>), the output will be “piped” to the <code>grep</code> process input. Here we can see that <code>grep</code> accepts standard input if no files are specified as arguments (which we have not, we’ve only specified the pattern <code>123</code>.) The <code>grep</code> command will now search for <code>123</code> inside of the input that we’ve passed to it (which is the entire <code>test.txt</code> file) and will output the line:</p>
+<pre><code>testing testing <span class="number">123</span>
+</code></pre></span>
         
       
     </div>
