@@ -47,7 +47,7 @@ Redirection &amp;gt;Bash interprets the">
 <meta property="og:site_name" content="Matt O'Connell: Blog">
 <meta property="og:description" content="These commands come in handy on a daily basis. At first, I ran into issues differentiating the two. I’ve documented some extra-simple examples of using both below.
 Redirection &amp;gt;Bash interprets the">
-<meta property="og:updated_time" content="2016-03-21T20:19:26.000Z">
+<meta property="og:updated_time" content="2016-03-21T20:23:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bash Pipes vs. Redirects">
 <meta name="twitter:description" content="These commands come in handy on a daily basis. At first, I ran into issues differentiating the two. I’ve documented some extra-simple examples of using both below.
@@ -206,7 +206,7 @@ Redirection &amp;gt;Bash interprets the">
 <h3 id="Pipes_|">Pipes <code>|</code></h3><p>To connect the standard output of one command to the standard input of another use the <code>|</code> symbol, commonly known as a <code>pipe</code>. Pipes are used to pass output to another <strong>program</strong> or <strong>utility</strong>. So, if we’re trying to connect the i/o of a command to another command, we’ll use the <code>|</code>. But, if we want to take the output from a command and write it to a <strong>file</strong> or <strong>stream</strong>, we’ll use a redirect <code>&gt;</code> or <code>&gt;&gt;</code>.</p>
 <p>Here’s how a <code>|</code> would work on our <code>test.txt</code> file:</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | grep 123</span><br></pre></td></tr></table></figure>
-<p>This will read the newly altered <code>test.txt</code> and output the content. Instead of printing the output to the screen (like it would have done with <code>cat test.txt</code>), the output will be “piped” to the <code>grep</code> process input. Here we can see that <code>grep</code> accepts standard input if no files are specified as arguments (which we have not, we’ve only specified the pattern <code>123</code>.) The <code>grep</code> command will now search for <code>123</code> inside of the input that we’ve passed to it (which is the entire <code>test.txt</code> file) and will output the line:</p>
+<p>This will read the newly altered <code>test.txt</code> and output the content. Instead of printing the output to the screen (like it would have done with <code>cat test.txt</code>), the output will be “piped” to the <code>grep</code> process input. <a href="http://linux.die.net/man/1/grep" target="_blank" rel="external">Here</a> we can see that <code>grep</code> accepts standard input if no files are specified as arguments (which we have not, we’ve only specified the pattern <code>123</code>.) The <code>grep</code> command will now search for <code>123</code> inside of the input that we’ve passed to it (which is the entire <code>test.txt</code> file) and will output the line:</p>
 <pre><code>testing testing <span class="number">123</span>
 </code></pre></span>
       
