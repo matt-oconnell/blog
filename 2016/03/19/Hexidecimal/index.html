@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="Javascript,Type Conversion," />
+  <meta name="keywords" content="CS Basics,Math," />
 
 
 
@@ -39,16 +39,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript w">
+<meta name="description" content="Lately, I’ve been reading through some materials overviewing number systems, specifically in regards to computing. I’m going to jot down some of the reviewed ideas here.
+The Decimal SystemWe’re all fa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Javascript Type Conversion">
-<meta property="og:url" content="http://yoursite.com/2015/09/18/TypeConversion/index.html">
+<meta property="og:title" content="Decimal, Binary, and Hexadecimal">
+<meta property="og:url" content="http://yoursite.com/2016/03/19/Hexidecimal/index.html">
 <meta property="og:site_name" content="Matt O'Connell: Blog">
-<meta property="og:description" content="JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript w">
-<meta property="og:updated_time" content="2015-09-18T18:47:16.000Z">
+<meta property="og:description" content="Lately, I’ve been reading through some materials overviewing number systems, specifically in regards to computing. I’m going to jot down some of the reviewed ideas here.
+The Decimal SystemWe’re all fa">
+<meta property="og:updated_time" content="2016-03-29T23:03:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Javascript Type Conversion">
-<meta name="twitter:description" content="JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript w">
+<meta name="twitter:title" content="Decimal, Binary, and Hexadecimal">
+<meta name="twitter:description" content="Lately, I’ve been reading through some materials overviewing number systems, specifically in regards to computing. I’m going to jot down some of the reviewed ideas here.
+The Decimal SystemWe’re all fa">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -58,7 +61,7 @@
   };
 </script>
 
-  <title> Javascript Type Conversion | Matt O'Connell: Blog </title>
+  <title> Decimal, Binary, and Hexadecimal | Matt O'Connell: Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -165,7 +168,7 @@
           
           
             
-              Javascript Type Conversion
+              Decimal, Binary, and Hexadecimal
             
           
         </h1>
@@ -174,26 +177,11 @@
       <div class="post-meta">
         <span class="post-time">
           Posted on
-          <time itemprop="dateCreated" datetime="2015-09-18T11:08:13-04:00" content="2015-09-18">
-            2015-09-18
+          <time itemprop="dateCreated" datetime="2016-03-19T20:14:12-04:00" content="2016-03-19">
+            2016-03-19
           </time>
         </span>
 
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; In
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Programming/" itemprop="url" rel="index">
-                  <span itemprop="name">Programming</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
         
 
         
@@ -208,18 +196,45 @@
       
 
       
-        <span itemprop="articleBody"><p>JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript will attempt to convert the given expression into the type it is looking for.<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">e</span> = &#123;<span class="keyword">ex</span>:1&#125;;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">e</span>) &#123;</span><br><span class="line">    <span class="comment">// converted from an object to boolean</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Usually, this is helpful, but sometimes it can lead to unexpected results. For example, the <code>+</code> operator will always concatenate values if one is a string, otherwise it will add two values together. In the example below, the number <code>1</code> is converted to a string.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'99'</span> + <span class="number">1</span></span><br><span class="line"><span class="comment">// '991'</span></span><br></pre></td></tr></table></figure></p>
-<p>But, the <code>-</code> operator will trigger a type conversion when applied to a string or strings, attempting to convert them to numeric values.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'99'</span> - <span class="string">'1'</span></span><br><span class="line"><span class="comment">// 98</span></span><br></pre></td></tr></table></figure></p>
-<p><code>true</code> converts to <code>1</code> when expected in an arithmetic operation and <code>null</code> converts to <code>0</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">true</span> + <span class="number">2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">null * <span class="number">1</span></span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
-<p>Logical operators (<code>||</code> or <code>&amp;&amp;</code>) work on all types. They expect boolean values though, so when presented with a non-boolean, they will convert it. If it converts to <code>true</code>, they return the original value. For this reason, logical operators are extremely useful in allowing for fallback values and null checks.</p>
-<p>The below code is an example of ‘short-circuiting’ an evaluation. Since <code>a</code> is null, we fall back to the secondary value. But, if <code>a</code> had evaluated to <code>true</code>, then the second expression would never be evaluated.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> a</span> = <span class="literal">null</span></span><br><span class="line"><span class="variable"><span class="keyword">var</span> b</span> = a || 'fallback value'</span><br><span class="line">b <span class="comment">// 'fallback value'</span></span><br></pre></td></tr></table></figure>
-<p>Below, we are using the logical operator to perform a null check on a value we receieved for an imaginary API. If we tried to access <code>c.inner.inner</code> without the null check and <code>c</code> or <code>c.inner</code> did not exist, we would get a <code>&quot;Cannot read property &#39;inner&#39; of undefined error.&quot;</code> But, since we performed the check, the worst that can happen is the <code>if</code> conditional returns <code>false</code> and the program moves right along.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">c</span> = getSomeAPIDataInJSON();</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">c</span> &amp;&amp; <span class="built_in">c</span>.inner &amp;&amp; <span class="built_in">c</span>.inner.inner) &#123;</span><br><span class="line">    console.log(<span class="built_in">c</span>.inner.inner);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>==</code> checks for equality regardless of the type. Type conversion is performed here.</p>
-<p><code>===</code> checks for equality and matching type. It actually runs faster since we are avoiding a type conversion here. This should be used when possible.</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="number">0</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="string">''</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="literal">null</span> === <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p>What counts as <code>false</code>?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">NaN</span> == <span class="literal">false</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">undefined</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// all true</span></span><br></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><p>Lately, I’ve been reading through some materials overviewing number systems, specifically in regards to computing. I’m going to jot down some of the reviewed ideas here.</p>
+<h2 id="The_Decimal_System">The Decimal System</h2><p>We’re all familiar with our Base 10 or decimal number system. It’s the most common number system globally and has been for quite some time. Evidence points to the first recorded usages of it in Egyptian Hieroglyphics dating back to ~3000 BC. Why 10? Probably because people tend to count using their fingers. </p>
+<p>The idea behind the decimal system is simple. There are 10 symbols to work with:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<p>Combined together, they can represent any quantity. </p>
+<p><strong>How do we represent quantity in a decimal system?</strong></p>
+<p>At a ridiculously simplified level, every number Base <code>n</code> number system works in a similar fashion. You count up using your available symbols 0.. 1.. 2.. (etc.) until you run out. When there are no more symbols left, a digit needs to be added. In order to get from 9 to 10, we flip the first (rightmost) digit back to our first symbol <code>0</code> and increase the newly added digit to the left <code>1</code> to leave us with 10.</p>
+<p>In a Base 10 system, each digit represents a power of 10 (our <code>base</code>.) We count up in powers starting from the first (rightmost) digit.</p>
+<p>The formula to convert any base number to decimal could be represented like this:</p>
+<blockquote>
+<p><code>d</code> is our digit</p>
+<p><code>p</code> is our position of our digit in the number starting from the first/rightmost (0)</p>
+<p><code>B</code> is our base</p>
+</blockquote>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">...</span> + (d * <span class="keyword">B </span>^ <span class="literal">p1</span>) + (d * <span class="keyword">B </span>^ <span class="literal">p0</span>)</span><br></pre></td></tr></table></figure>
+<p>Lets try and apply this formula to a base 10 <code>101</code>.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">2</span>) + (<span class="number">0</span> * <span class="number">10</span> ^ <span class="number">1</span>) + (<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
+<p>… and one more time in Javascript</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
+<h2 id="Binary">Binary</h2><p>Modern computing is built upon the Base 2 or binary system. In binary we are limited to 2 symbols <code>[0, 1]</code>. In a binary system, <code>101</code> would convert to:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Why do we use Binary in Computer Science?</strong></p>
+<p>Transistors are basic building blocks of microchips. They are tiny switches that enable or disable the flow of electricity by connecting or disconnecting two ends of wire. Learn more about them <a href="http://www.livescience.com/46021-what-is-a-transistor.html" target="_blank" rel="external">here</a>. There are some lower-level details about this that we won’t delve into here but ultimately, these signal-triggered switches allow for very basic binary calculations. When combined together, these binary calculations can represent more complex chunks of data. If we wanted to represent 1,234 in binary, we would get <code>10011010010</code>. Adding a layer of abstraction on top of this, we could represent an alphabet in binary:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> = a, <span class="number">1</span> = b, <span class="number">10</span> = c, <span class="number">11</span> = d, <span class="number">100</span> = e, etc.</span><br></pre></td></tr></table></figure>
+<p>The fundamental unit of memory inside a computer is called a bit (short for “binary digit.) These are the switches we just mentioned. Group together 8 bits in a row and you have a byte. A byte is considered the “smallest operable unit of information” in computer storage and processing. We’re all familiar with seeing bytes, kilobytes, megabytes, gigabytes, terabytes, etc. to measure computer hardware metics like hard drive capacity and RAM. Generally speaking, bits are not used as units of measurement unless we’re focusing on data transfer speed or networking. For instance, your internet speed is probably defined in terms of bits/second. (kbps = kilobits/second while kBps = kilobytes/second)</p>
+<p>A byte can represent any decimal number from 0 to 255. Why is this? Well, if we apply our formula above to a byte we can prove this. Knowing that we have a maximum of 8 potential bits/digits and the max symbol in a binary system on each of these digits would be 1, we can convert <code>1111 1111</code> to decimal. Plug this into the formula above and you’ll see we get <code>255</code>. </p>
+<p><code>255</code> is found throughout computer science as a maximum value. The American Standard Code for Information Interchange (ASCII) is a standard which assigns letters, numbers, and characters to the 256 slots available in a byte (well, the <em>extended</em> version does.) Colors are represented as ranges of 0-255 of red green, and blue.</p>
+<h2 id="Hexadecimal">Hexadecimal</h2><p>Hexadecimal notation or Base 16 is commonly found throughout computer science. The notation employs 16 symbols</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, 'A', 'B', 'C', 'D', 'E', 'F']</span><br></pre></td></tr></table></figure>
+<p>Hexadecimal numbers can represent larger quantities in smaller strings than base 10 since we have a larger set of symbols to work through before having to move up a column. </p>
+<p>Why hex and not decimal? The answer is convenience. Computers are built upon bytes but us humans have an easier time reading/remembering <code>1D</code> rather than <code>0001 1101</code>. You may be asking yourself, “Why can’t we just use decimal then?” Hex is <em>easily convertible back to binary</em>. Each hex digit directly maps to 4 binary bits. There is no direct mapping available between decimal numbers and groups of 4 or 8 bits.  </p>
+<h2 id="Some_Examples_of_Hexadecimal_in_Computing">Some Examples of Hexadecimal in Computing</h2><p><strong>Basic Encoding</strong></p>
+<p>Hexadecimal representations are often represented in C and UNIX along with many of their successors using the prefix <code>0x</code>. Try opening your inspector window and typing <code>0x5A3</code>. It will output <code>1443</code>, a decimal conversion of hexadecimal <code>5A3</code>. </p>
+<p><strong>Colors</strong></p>
+<p>HTML colors can be represented using hexadecimal systems. Colors in HTML use an additive color system, a mix of varying amounts of red, green, and blue. We can have a combination of these three primary colors that range of intensities from 0 (least intense) - 255 (most intense.) As we stated before, 255 is the maximum number a byte can store. </p>
+<p><code>rgb(0, 0, 0)</code> would be the darkest or least intense combination of the 3 primary colors (black) or <code>#000000</code> (hex). <code>rgb(255,255,255)</code> is the lightest (white) or most intense. White can also be represented by <code>#FFFFFF</code> (hex).</p>
+<p><strong>Unicode</strong></p>
+<p>Unicode, which is a superset of ASCII, representings a euro sign would as <code>20AC</code>. Try typing <code>’\u20ac’</code> into your inspector window. <code>\u</code> is a unicode escape character.</p>
+<p><strong>URL Encoding</strong></p>
+<p>Hex is also implemented in URL encoding. Try typing this in your browser navigation bar: <code>http:google.com/these are spaces</code>. The browser will convert the spaces to their UTF-8 value (32) and then to hexadecimal (20) and prefix them with the <code>%</code> that indicates a special character encoding. You should get <code>http:google.com/these%20are%20spaces</code>.</p>
 </span>
       
     </div>
@@ -228,9 +243,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Javascript/" rel="tag">#Javascript</a>
+            <a href="/tags/CS-Basics/" rel="tag">#CS Basics</a>
           
-            <a href="/tags/Type-Conversion/" rel="tag">#Type Conversion</a>
+            <a href="/tags/Math/" rel="tag">#Math</a>
           
         </div>
       
@@ -239,13 +254,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/20/NoSQL/" rel="prev">The Rise of NoSQL</a>
+              <a href="/2016/03/21/command-line/" rel="prev">Bash Pipes vs. Redirects</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/18/defining-functions/" rel="next">Defining Functions in Javascript</a>
+              <a href="/2016/02/12/console-log/" rel="next">console.log ?</a>
             
           </div>
         </div>
@@ -363,7 +378,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">This post does not have a Table Of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The_Decimal_System"><span class="nav-number">1.</span> <span class="nav-text">The Decimal System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary"><span class="nav-number">2.</span> <span class="nav-text">Binary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexadecimal"><span class="nav-number">3.</span> <span class="nav-text">Hexadecimal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some_Examples_of_Hexadecimal_in_Computing"><span class="nav-number">4.</span> <span class="nav-text">Some Examples of Hexadecimal in Computing</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
