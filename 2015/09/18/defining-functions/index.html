@@ -34,27 +34,29 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="Matt O'Connell: Blog" type="application/atom+xml" />
+
 
 
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
 <meta name="description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
+Function Declaration:function example() &amp;#123;    return true&amp;#125;
+Function Expression:var example = functi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Defining Functions in Javascript">
 <meta property="og:url" content="http://yoursite.com/2015/09/18/defining-functions/index.html">
 <meta property="og:site_name" content="Matt O'Connell: Blog">
 <meta property="og:description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
+Function Declaration:function example() &amp;#123;    return true&amp;#125;
+Function Expression:var example = functi">
 <meta property="og:updated_time" content="2015-09-18T18:48:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Defining Functions in Javascript">
 <meta name="twitter:description" content="There are several ways to define a function in JavaScript. We’ll take a look at a few here.
-Function Declaration:123function example() &amp;#123;    return true&amp;#125;
-Function Expression:123var example =">
+Function Declaration:function example() &amp;#123;    return true&amp;#125;
+Function Expression:var example = functi">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -215,10 +217,10 @@ Function Expression:123var example =">
 
       
         <span itemprop="articleBody"><p>There are several ways to define a function in JavaScript. We’ll take a look at a few here.</p>
-<p>Function Declaration:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Function Expression:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> example = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Both examples do pretty much the same thing with one subtle difference. The function declaration is not included in the regular control flow. They are hoisted to the top of whatever scope they reside in. This means you can call the function before it’s written in your code.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex1();</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ex1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex2();</span><br><span class="line"><span class="comment">// Uncaught TypeError: ex2 is not a function</span></span><br><span class="line"><span class="keyword">var</span> ex2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Function Declaration:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Function Expression:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> example = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Both examples do pretty much the same thing with one subtle difference. The function declaration is not included in the regular control flow. They are hoisted to the top of whatever scope they reside in. This means you can call the function before it’s written in your code.<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">ex1();</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ex1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">ex2();</span><br><span class="line"><span class="comment">// Uncaught TypeError: ex2 is not a function</span></span><br><span class="line"><span class="keyword">var</span> ex2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>What’s happening here? The variable <code>ex2</code> is actually getting hoisted to the top of it’s scope, similarly to a function. But, the contents of the variable do not get hoisted. The environment is recognizing <code>ex2</code> as an undefined value.</p>
 </span>
       
@@ -307,7 +309,7 @@ Function Expression:123var example =">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -321,13 +323,20 @@ Function Expression:123var example =">
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">

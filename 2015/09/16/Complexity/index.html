@@ -34,6 +34,8 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="Matt O'Connell: Blog" type="application/atom+xml" />
+
 
 
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
@@ -218,7 +220,7 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
 <p>Complexity analysis explains how an algorithm will behave as it’s input grows</p>
 </blockquote>
 <p>We’re interested in our algorithm’s behavior as <code>n</code> tends towards <code>infinity</code>. The way we analyze this in computer science differs from how one would formally analyze <code>O(f(x))</code> in mathematics. In mathematics we would include coefficients, constants, and lower order terms. For example:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
 <p>Is filtered down in comp sci Big O notation to</p>
 <pre><code><span class="literal">f</span>(<span class="keyword">n</span>) = <span class="keyword">n</span>
 </code></pre><p>The idea behind this is that we want to isolate the parts of the function that will be effected by the growth of n. If we change n, does the constant 408 change? No. If we change n, does 10n behave differently than 20n would? No, not really. 20n would increase at the same linear rate as 10n, so overall, it’s behavior is the same. So we filter it down to a very basic level and say the function will change at a linear rate: <code>f(n) = n</code> which is expressed in Big O notation as <code>O(n)</code></p>
@@ -315,7 +317,7 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -329,13 +331,20 @@ Big O notation allows us to analyze algorithms in an abstract fashion. It falls 
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">

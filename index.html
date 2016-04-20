@@ -34,6 +34,8 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="Matt O'Connell: Blog" type="application/atom+xml" />
+
 
 
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
@@ -166,6 +168,109 @@
           
           
             
+              <a class="post-title-link" href="/2016/04/20/dry-sass/" itemprop="url">
+                Lean and DRY CSS using Sass
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-04-20T17:43:16-04:00" content="2016-04-20">
+            2016-04-20
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="Lean_and_DRY_CSS_using_Sass">Lean and DRY CSS using Sass</h2><p>I recently attempting to recreate a bare-bones Bootstrap-like grid system for a project and started delving a little deeper into the compilation process behind Sass. It’s easy enough to create a DRY Sass codebase but a bit more difficult to ensure that it translates into a DRY (and therefore smaller) CSS file. Using the right combination of mixins, placeholders and <code>@extend</code> can help here.</p>
+<h2 id="Mixins">Mixins</h2><p>Mixins are a primary feature of CSS preprocessors and indispensable assets for creating a DRY codebase. They allow you to avoid using non-semantic tags like <code>.align-left</code>. They are function-like in that they can accept variables, process them, and return new data. They technically don’t return a value, but rather they dump CSS content into place.</p>
+<p>Declaration example:<br><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">=<span class="function"><span class="title">square</span><span class="params">(<span class="variable">$dimension</span>: <span class="number">100%</span>)</span></span></span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">$dimension</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="variable">$dimension</span></span><br></pre></td></tr></table></figure></p>
+<p>The above example illustrates a square mixin that takes a <code>$dimension</code> parameter and injects two properties: <code>width</code> and <code>height</code>. You can assign a default value (in this case we’re using <code>100%</code>.) The default value is used if no argument is supplied at the time the mixin is used. </p>
+<p>Usage example:<br><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.my-200px-square-div</span></span><br><span class="line">    +<span class="function"><span class="title">sq</span><span class="params">(<span class="number">200px</span>)</span></span></span><br><span class="line">    </span><br><span class="line"><span class="class">.my-100-percent-square-div</span></span><br><span class="line">    +sq <span class="comment">// no arguments, use default value</span></span><br></pre></td></tr></table></figure></p>
+<p>Compiled CSS<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.my-200px-square-div</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.my-100-percent-square-div</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Placeholders">Placeholders</h2><p>Placeholders are <em>very</em> similar to mixins. They also provide the capability to inject chunks of CSS into your code. The main difference is you can’t pass variables to placeholders. You would not be able to create the same functionality as the <code>square</code> mixin above with placeholders.</p>
+<p>Declaration example:</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">%<span class="attribute">vertical-align</span></span><br><span class="line">    <span class="attribute">position</span><span class="value">: relative</span><br><span class="line">    top: <span class="number">50%</span></span><br><span class="line">    transform: <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span><br></pre></td></tr></table></figure>
+<p>Usage example:</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="class">.div-1</span></span><br><span class="line">    <span class="at_rule">@<span class="keyword">extend</span> %vertical-align</span><br><span class="line">    <span class="preprocessor"></span><br><span class="line">.div2</span></span><br><span class="line">    @<span class="keyword">extend</span> %vertical-align</span></span><br></pre></td></tr></table></figure>
+<p>So, why would we bother using placeholders when we could just define a mixin with no parameters? The answer lies in the <code>@extend</code> function and the resulting compilation process. Placeholders are more efficiently compiled. Since they are not dependent upon context-specific variables, our preprocessor can optimize our final CSS code and avoid repetition. See below:</p>
+<p>Compiled CSS<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.div1</span>, <span class="class">.div2</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>If we use a mixin for <code>=vertical-align</code> instead, we would get this:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.div1</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.div2</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Always choose to define a set of properties as a placeholder when they stay the same regardless of the context in which they are used. If you need to pass in variables that vary depending on the context, use a mixin.</p>
+<h2 id="@Extend">@Extend</h2><p>We used <code>@extend</code> in our example above. This is actually how we are avoiding the code from duplicating in the compiled stylesheet. <code>@extend</code> can be used to include static, reusable properties somewhere else in code. In our case this happens to be a placeholder. <code>@extend</code> can also be used on classes to DRY out our code.</p>
+<p>As an example, we can create a <code>button</code> class. We want to create two alternate versions of our <code>button</code> class. We want both sub-classes to share the properties of the <code>button</code> class but also add their own. Also, we want to do this in the most efficient way possible without duplicating code in the processed stylesheet. Our two classes will be <code>button-rounded</code> (a button with rounded corners) and <code>button-shadowed</code> (a button with a box shadow.) We could nest the properties like so:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span></span><br><span class="line">    <span class="attribute">color</span>: green</span><br><span class="line">    <span class="attribute">background</span>: <span class="hexcolor">#fff</span></span><br><span class="line">    </span><br><span class="line">    &amp;<span class="class">.button-rounded</span></span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">10px</span></span><br><span class="line">     </span><br><span class="line">    &amp;<span class="class">.button-shadowed</span></span><br><span class="line">        <span class="attribute">box-shadow</span>: <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span><br></pre></td></tr></table></figure>
+<p>But, every time we want to create a <code>button-rounded</code> element, we’d have to assign it two classes: <code>button</code> and <code>button-rounded</code>. A better option would be to extend the <code>button</code> class into the alternate buttons like so:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span></span><br><span class="line">    <span class="attribute">color</span>: green</span><br><span class="line">    <span class="attribute">background</span>: <span class="hexcolor">#fff</span></span><br><span class="line">    </span><br><span class="line"><span class="class">.button-rounded</span></span><br><span class="line">    <span class="at_rule">@extend</span> <span class="class">.button</span></span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span></span><br><span class="line">    </span><br><span class="line"><span class="class">.button-shadowed</span></span><br><span class="line">    <span class="at_rule">@extend</span> <span class="class">.button</span></span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span><br></pre></td></tr></table></figure>
+<p>Compiled:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span>, <span class="class">.button-rounded</span>, <span class="class">.button-shadowed</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">color</span>:<span class="value"> green</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.button-rounded</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.button-shadowed</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Ahh, that’s better. We can now use <code>.button</code>, <code>.button-rounded</code>, or <code>.button-shadowed</code> individually. The compiled CSS has been optimized to group selectors with the same properties, resulting in a smaller stylesheet.</p>
+<p>How do we know whether we should be extending <code>.classes</code> vs. <code>%placeholders</code>? <code>%placeholders</code> are like sass variables in the respect that they are not explicitly included in the final stylesheet. If we assign a variable in our Sass but don’t use it anywhere, you will not find it in the post-processed CSS. The same goes for placeholders. So, we should <code>@extend</code> classes when we are using the class on it’s own somewhere. In our button example, we are planning to apply the plain <code>.button</code> class to an element somewhere in our markup. If we were only planning on using <code>.button-rounded</code> and <code>.button-shadowed</code> in our markup but not actually the plain <code>.button</code> class anywhere, we would have defined <code>button</code> as a <code>%placeholder</code> instead.</p>
+<h2 id="Conclusion">Conclusion</h2><p>Always use <code>@extend</code> with a <code>.class</code> or <code>%placeholder</code> if we want to duplicate non-dynamic properties. This will result in a lighter post-processed CSS stylesheet. <code>@extend</code> classes if the extensible class will be used on its own, otherwise use a <code>%placeholder</code>.</p>
+<p>Mixins are duplicated in processed CSS and should be used only when necessary. When are they necessary? They are necessary only when we need to pass in a variable as an argument.</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/03/23/Hexidecimal/" itemprop="url">
                 Decimal, Binary, and Hexadecimal
               </a>
@@ -182,6 +287,21 @@
           </time>
         </span>
 
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
         
 
         
@@ -200,7 +320,7 @@
           <span itemprop="articleBody"><p>Lately, I’ve been reading through some materials overviewing number systems, specifically in regards to computing. I’m going to jot down some of the reviewed ideas here.</p>
 <h2 id="The_Decimal_System">The Decimal System</h2><p>We’re all familiar with our Base 10 or decimal number system. It’s the most common number system globally and has been for quite some time. Evidence points to the first recorded usages of it in Egyptian Hieroglyphics dating back to ~3000 BC. Why 10? Probably because people tend to count using their fingers. </p>
 <p>The idea behind the decimal system is simple. There are 10 symbols to work with:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
 <p>Combined together, they can represent any quantity. </p>
 <p><strong>How do we represent quantity in a decimal system?</strong></p>
 <p>At a ridiculously simplified level, every number Base <code>n</code> number system works in a similar fashion. You count up using your available symbols 0.. 1.. 2.. (etc.) until you run out. When there are no more symbols left, a digit needs to be added. In order to get from 9 to 10, we flip the first (rightmost) digit back to our first symbol <code>0</code> and increase the newly added digit to the left <code>1</code> to leave us with 10.</p>
@@ -211,20 +331,20 @@
 <p><code>p</code> is our position of our digit in the number starting from the first/rightmost (0)</p>
 <p><code>B</code> is our base</p>
 </blockquote>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">...</span> + (d * <span class="keyword">B </span>^ <span class="literal">p1</span>) + (d * <span class="keyword">B </span>^ <span class="literal">p0</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="label">...</span> + (d * <span class="keyword">B </span>^ <span class="literal">p1</span>) + (d * <span class="keyword">B </span>^ <span class="literal">p0</span>)</span><br></pre></td></tr></table></figure>
 <p>Lets try and apply this formula to a base 10 <code>101</code>.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">2</span>) + (<span class="number">0</span> * <span class="number">10</span> ^ <span class="number">1</span>) + (<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">(<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">2</span>) + (<span class="number">0</span> * <span class="number">10</span> ^ <span class="number">1</span>) + (<span class="number">1</span> * <span class="number">10</span> ^ <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
 <p>… and one more time in Javascript</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
-<h2 id="Binary">Binary</h2><p>Modern computing is built upon the Base 2 or binary system. In binary we are limited to 2 symbols <code>[0, 1]</code>. In a binary system, <code>101</code> would convert to:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 101</span></span><br></pre></td></tr></table></figure>
+<h2 id="Binary">Binary</h2><p>Modern computing is built upon the Base 2 or binary system. In binary we are limited to 2 symbols <code>[0, 1]</code>. In a binary system, <code>101</code> would convert to:<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">2</span>)  +  <span class="number">0</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">1</span>)  +  <span class="number">1</span> * Math.<span class="built_in">pow</span>(<span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>Why do we use Binary in Computer Science?</strong></p>
 <p>Transistors are basic building blocks of microchips. They are tiny switches that enable or disable the flow of electricity by connecting or disconnecting two ends of wire. Learn more about them <a href="http://www.livescience.com/46021-what-is-a-transistor.html" target="_blank" rel="external">here</a>. There are some lower-level details about this that we won’t delve into here but ultimately, these signal-triggered switches allow for very basic binary calculations. When combined together, these binary calculations can represent more complex chunks of data. If we wanted to represent 1,234 in binary, we would get <code>10011010010</code>. Adding a layer of abstraction on top of this, we could represent an alphabet in binary:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> = a, <span class="number">1</span> = b, <span class="number">10</span> = c, <span class="number">11</span> = d, <span class="number">100</span> = e, etc.</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span> = a, <span class="number">1</span> = b, <span class="number">10</span> = c, <span class="number">11</span> = d, <span class="number">100</span> = e, etc.</span><br></pre></td></tr></table></figure>
 <p>The fundamental unit of memory inside a computer is called a bit (short for “binary digit.) These are the switches we just mentioned. Group together 8 bits in a row and you have a byte. A byte is considered the “smallest operable unit of information” in computer storage and processing. We’re all familiar with seeing bytes, kilobytes, megabytes, gigabytes, terabytes, etc. to measure computer hardware metics like hard drive capacity and RAM. Generally speaking, bits are not used as units of measurement unless we’re focusing on data transfer speed or networking. For instance, your internet speed is probably defined in terms of bits/second. (kbps = kilobits/second while kBps = kilobytes/second)</p>
 <p>A byte can represent any decimal number from 0 to 255. Why is this? Well, if we apply our formula above to a byte we can prove this. Knowing that we have a maximum of 8 potential bits/digits and the max symbol in a binary system on each of these digits would be 1, we can convert <code>1111 1111</code> to decimal. Plug this into the formula above and you’ll see we get <code>255</code>. </p>
 <p><code>255</code> is found throughout computer science as a maximum value. The American Standard Code for Information Interchange (ASCII) is a standard which assigns letters, numbers, and characters to the 256 slots available in a byte (well, the <em>extended</em> version does.) Colors are represented as ranges of 0-255 of red green, and blue.</p>
 <h2 id="Hexadecimal">Hexadecimal</h2><p>Hexadecimal notation or Base 16 is commonly found throughout computer science. The notation employs 16 symbols</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, 'A', 'B', 'C', 'D', 'E', 'F']</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, 'A', 'B', 'C', 'D', 'E', 'F']</span><br></pre></td></tr></table></figure>
 <p>Hexadecimal numbers can represent larger quantities in smaller strings than base 10 since we have a larger set of symbols to work through before having to move up a column. </p>
 <p>Why hex and not decimal? The answer is convenience. Computers are built upon bytes but us humans have an easier time reading/remembering <code>1D</code> rather than <code>0001 1101</code>. You may be asking yourself, “Why can’t we just use decimal then?” Hex is <em>easily convertible back to binary</em>. Each hex digit directly maps to 4 binary bits. There is no direct mapping available between decimal numbers and groups of 4 or 8 bits.  </p>
 <h2 id="Some_Examples_of_Hexadecimal_in_Computing">Some Examples of Hexadecimal in Computing</h2><p><strong>Basic Encoding</strong></p>
@@ -283,6 +403,21 @@
         </span>
 
         
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
 
         
           
@@ -299,14 +434,14 @@
         
           <span itemprop="articleBody"><p>These commands come in handy on a daily basis. At first, I ran into issues differentiating the two. I’ve documented some extra-simple examples of using both below.</p>
 <h3 id="Redirection_&gt;">Redirection <code>&gt;</code></h3><p>Bash interprets the symbols <code>&gt;</code> and <code>&gt;&gt;</code> as instructions to reroute a command’s input or output to or from a file.<br><code>&gt;</code> is used to pass output to either a <strong>file</strong> or <strong>stream</strong>.<br>The variation <code>&gt;&gt;</code> is used to <em>append</em> output to the end of a <strong>file</strong><br><strong>Note:</strong> we can also use <code>&lt;</code> to redirect in the alternate direction.</p>
-<p>Here’s an example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">123</span>” &gt; test.txt</span><br><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">456</span>” &gt;&gt; test.txt</span><br></pre></td></tr></table></figure></p>
+<p>Here’s an example:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">123</span>” &gt; test.txt</span><br><span class="line"><span class="built_in">echo</span> “testing testing <span class="number">456</span>” &gt;&gt; test.txt</span><br></pre></td></tr></table></figure></p>
 <p>The first command takes the standard output from the <code>echo</code> command (in this case: “testing testing 123”) and points it to <code>test.txt</code>, overwriting any content that was currently in this file if the file currently exists or creating a new file consisting of this standard output.</p>
 <p>The second command takes the standard output from the <code>echo</code> command (in this case: “testing testing 456”) and appends it (note the double <code>&gt;&gt;</code>) to our <code>test.txt</code> file.</p>
 <p>Our file will now look like this:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">testing testing <span class="number">123</span></span><br><span class="line">testing testing <span class="number">456</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">testing testing <span class="number">123</span></span><br><span class="line">testing testing <span class="number">456</span></span><br></pre></td></tr></table></figure>
 <h3 id="Pipes_|">Pipes <code>|</code></h3><p>To connect the standard output of one command to the standard input of another use the <code>|</code> symbol, commonly known as a <code>pipe</code>. Pipes are used to pass output to another <strong>program</strong> or <strong>utility</strong>. So, if we’re trying to connect the i/o of a command to another command, we’ll use the <code>|</code>. But, if we want to take the output from a command and write it to a <strong>file</strong> or <strong>stream</strong>, we’ll use a redirect <code>&gt;</code> or <code>&gt;&gt;</code>.</p>
 <p>Here’s how a <code>|</code> would work on our <code>test.txt</code> file:</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | grep 123</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cat</span> <span class="keyword">test</span>.txt | grep 123</span><br></pre></td></tr></table></figure>
 <p>This will read the newly altered <code>test.txt</code> and output the content. Instead of printing the output to the screen (like it would have done with <code>cat test.txt</code>), the output will be “piped” to the <code>grep</code> process input. <a href="http://linux.die.net/man/1/grep" target="_blank" rel="external">Here</a> we can see that <code>grep</code> accepts standard input if no files are specified as arguments (which we have not, we’ve only specified the pattern <code>123</code>.) The <code>grep</code> command will now search for <code>123</code> inside of the input that we’ve passed to it (which is the entire <code>test.txt</code> file) and will output the line:</p>
 <pre><code>testing testing <span class="number">123</span>
 </code></pre></span>
@@ -386,9 +521,9 @@
       
         
           <span itemprop="articleBody"><h3 id="Console-log(‘?’);">Console.log(‘?’);</h3><p>If you’re a javascript developer, <code>console.log()</code> is most likely one of very first commands you’ve utilized in a script. Despite it being a core tool in every front-end developer’s toolbox, many are unaware of how it processes inputs. This is likely due to the fact that it’s instroduced at such an early stage in many developers’ careers. As a note, I’m focusing primarily console.log’s output in the Chrome Inspector window. </p>
-<p>I’ve seen code similar to this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>');</span></span><br><span class="line"><span class="title">console</span>.log(<span class="typedef"><span class="keyword">data</span>);</span></span><br></pre></td></tr></table></figure></p>
-<p>that was implemented in order to avoid this:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>' + <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span>[object <span class="type">Object</span>]</span></span><br></pre></td></tr></table></figure></p>
-<p>that could be displayed more succinctly using:<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>', <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span> <span class="type">Object</span> <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>I’ve seen code similar to this:<br><figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>');</span></span><br><span class="line"><span class="title">console</span>.log(<span class="typedef"><span class="keyword">data</span>);</span></span><br></pre></td></tr></table></figure></p>
+<p>that was implemented in order to avoid this:<br><figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>' + <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span>[object <span class="type">Object</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>that could be displayed more succinctly using:<br><figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">var</span> <span class="typedef"><span class="keyword">data</span> = <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span>;</span></span><br><span class="line"><span class="title">console</span>.log('<span class="type">My</span> <span class="typedef"><span class="keyword">data</span>', <span class="keyword">data</span>);</span></span><br><span class="line">// <span class="type">My</span> <span class="typedef"><span class="keyword">data</span> <span class="type">Object</span> <span class="container">&#123; <span class="title">key</span>: '<span class="title">value'</span> &#125;</span></span></span><br></pre></td></tr></table></figure></p>
 <p><code>console.log()</code> takes an infinite number of mixed parameters (could be of type string, array, object, function, etc.). <strong>But,</strong> if passed a parameter like <code>&#39;My data&#39; + data&#39;</code>, javascript will convert the <code>data</code> object into a string (<code>[object Object]</code>). Avoid this by using commas and passing strings in seperately from other data types.</p>
 </span>
         
@@ -568,18 +703,18 @@
 
       
         
-          <span itemprop="articleBody"><p>JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript will attempt to convert the given expression into the type it is looking for.<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">e</span> = &#123;<span class="keyword">ex</span>:1&#125;;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">e</span>) &#123;</span><br><span class="line">    <span class="comment">// converted from an object to boolean</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Usually, this is helpful, but sometimes it can lead to unexpected results. For example, the <code>+</code> operator will always concatenate values if one is a string, otherwise it will add two values together. In the example below, the number <code>1</code> is converted to a string.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'99'</span> + <span class="number">1</span></span><br><span class="line"><span class="comment">// '991'</span></span><br></pre></td></tr></table></figure></p>
-<p>But, the <code>-</code> operator will trigger a type conversion when applied to a string or strings, attempting to convert them to numeric values.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'99'</span> - <span class="string">'1'</span></span><br><span class="line"><span class="comment">// 98</span></span><br></pre></td></tr></table></figure></p>
-<p><code>true</code> converts to <code>1</code> when expected in an arithmetic operation and <code>null</code> converts to <code>0</code><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">true</span> + <span class="number">2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">null * <span class="number">1</span></span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
+          <span itemprop="articleBody"><p>JavaScript’s automatic type conversion or type coersion can be tricky. When a statement expects a value of a certain type and the expression passed to it does not return one of that type, JavaScript will attempt to convert the given expression into the type it is looking for.<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">e</span> = &#123;<span class="keyword">ex</span>:1&#125;;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">e</span>) &#123;</span><br><span class="line">    <span class="comment">// converted from an object to boolean</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Usually, this is helpful, but sometimes it can lead to unexpected results. For example, the <code>+</code> operator will always concatenate values if one is a string, otherwise it will add two values together. In the example below, the number <code>1</code> is converted to a string.<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="string">'99'</span> + <span class="number">1</span></span><br><span class="line"><span class="comment">// '991'</span></span><br></pre></td></tr></table></figure></p>
+<p>But, the <code>-</code> operator will trigger a type conversion when applied to a string or strings, attempting to convert them to numeric values.<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="string">'99'</span> - <span class="string">'1'</span></span><br><span class="line"><span class="comment">// 98</span></span><br></pre></td></tr></table></figure></p>
+<p><code>true</code> converts to <code>1</code> when expected in an arithmetic operation and <code>null</code> converts to <code>0</code><br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="literal">true</span> + <span class="number">2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">null * <span class="number">1</span></span><br><span class="line"><span class="comment">// 0</span></span><br></pre></td></tr></table></figure></p>
 <p>Logical operators (<code>||</code> or <code>&amp;&amp;</code>) work on all types. They expect boolean values though, so when presented with a non-boolean, they will convert it. If it converts to <code>true</code>, they return the original value. For this reason, logical operators are extremely useful in allowing for fallback values and null checks.</p>
 <p>The below code is an example of ‘short-circuiting’ an evaluation. Since <code>a</code> is null, we fall back to the secondary value. But, if <code>a</code> had evaluated to <code>true</code>, then the second expression would never be evaluated.</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> a</span> = <span class="literal">null</span></span><br><span class="line"><span class="variable"><span class="keyword">var</span> b</span> = a || 'fallback value'</span><br><span class="line">b <span class="comment">// 'fallback value'</span></span><br></pre></td></tr></table></figure>
-<p>Below, we are using the logical operator to perform a null check on a value we receieved for an imaginary API. If we tried to access <code>c.inner.inner</code> without the null check and <code>c</code> or <code>c.inner</code> did not exist, we would get a <code>&quot;Cannot read property &#39;inner&#39; of undefined error.&quot;</code> But, since we performed the check, the worst that can happen is the <code>if</code> conditional returns <code>false</code> and the program moves right along.<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">c</span> = getSomeAPIDataInJSON();</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">c</span> &amp;&amp; <span class="built_in">c</span>.inner &amp;&amp; <span class="built_in">c</span>.inner.inner) &#123;</span><br><span class="line">    console.log(<span class="built_in">c</span>.inner.inner);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> a</span> = <span class="literal">null</span></span><br><span class="line"><span class="variable"><span class="keyword">var</span> b</span> = a || 'fallback value'</span><br><span class="line">b <span class="comment">// 'fallback value'</span></span><br></pre></td></tr></table></figure>
+<p>Below, we are using the logical operator to perform a null check on a value we receieved for an imaginary API. If we tried to access <code>c.inner.inner</code> without the null check and <code>c</code> or <code>c.inner</code> did not exist, we would get a <code>&quot;Cannot read property &#39;inner&#39; of undefined error.&quot;</code> But, since we performed the check, the worst that can happen is the <code>if</code> conditional returns <code>false</code> and the program moves right along.<br><figure class="highlight swift"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">c</span> = getSomeAPIDataInJSON();</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">c</span> &amp;&amp; <span class="built_in">c</span>.inner &amp;&amp; <span class="built_in">c</span>.inner.inner) &#123;</span><br><span class="line">    console.log(<span class="built_in">c</span>.inner.inner);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>==</code> checks for equality regardless of the type. Type conversion is performed here.</p>
 <p><code>===</code> checks for equality and matching type. It actually runs faster since we are avoiding a type conversion here. This should be used when possible.</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="number">0</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="string">''</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="literal">null</span> === <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p>What counts as <code>false</code>?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">NaN</span> == <span class="literal">false</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">undefined</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// all true</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="literal">null</span> == <span class="number">0</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="string">''</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="literal">null</span> === <span class="literal">undefined</span></span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>What counts as <code>false</code>?<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">NaN</span> == <span class="literal">false</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span></span><br><span class="line"><span class="literal">undefined</span> == <span class="literal">false</span></span><br><span class="line"><span class="comment">// all true</span></span><br></pre></td></tr></table></figure></p>
 </span>
         
       
@@ -657,10 +792,10 @@
       
         
           <span itemprop="articleBody"><p>There are several ways to define a function in JavaScript. We’ll take a look at a few here.</p>
-<p>Function Declaration:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Function Expression:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> example = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Both examples do pretty much the same thing with one subtle difference. The function declaration is not included in the regular control flow. They are hoisted to the top of whatever scope they reside in. This means you can call the function before it’s written in your code.<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex1();</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ex1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ex2();</span><br><span class="line"><span class="comment">// Uncaught TypeError: ex2 is not a function</span></span><br><span class="line"><span class="keyword">var</span> ex2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Function Declaration:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Function Expression:<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> example = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Both examples do pretty much the same thing with one subtle difference. The function declaration is not included in the regular control flow. They are hoisted to the top of whatever scope they reside in. This means you can call the function before it’s written in your code.<br><figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">ex1();</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ex1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">ex2();</span><br><span class="line"><span class="comment">// Uncaught TypeError: ex2 is not a function</span></span><br><span class="line"><span class="keyword">var</span> ex2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>What’s happening here? The variable <code>ex2</code> is actually getting hoisted to the top of it’s scope, similarly to a function. But, the contents of the variable do not get hoisted. The environment is recognizing <code>ex2</code> as an undefined value.</p>
 </span>
         
@@ -745,7 +880,7 @@
 <p>Complexity analysis explains how an algorithm will behave as it’s input grows</p>
 </blockquote>
 <p>We’re interested in our algorithm’s behavior as <code>n</code> tends towards <code>infinity</code>. The way we analyze this in computer science differs from how one would formally analyze <code>O(f(x))</code> in mathematics. In mathematics we would include coefficients, constants, and lower order terms. For example:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span></span> = <span class="number">10</span>n + <span class="number">408</span></span><br></pre></td></tr></table></figure>
 <p>Is filtered down in comp sci Big O notation to</p>
 <pre><code><span class="literal">f</span>(<span class="keyword">n</span>) = <span class="keyword">n</span>
 </code></pre><p>The idea behind this is that we want to isolate the parts of the function that will be effected by the growth of n. If we change n, does the constant 408 change? No. If we change n, does 10n behave differently than 20n would? No, not really. 20n would increase at the same linear rate as 10n, so overall, it’s behavior is the same. So we filter it down to a very basic level and say the function will change at a linear rate: <code>f(n) = n</code> which is expressed in Big O notation as <code>O(n)</code></p>
@@ -808,7 +943,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -822,13 +957,20 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">tags</span>
               </a>
           </div>
 
         </nav>
 
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
         
 
         <div class="links-of-author motion-element">

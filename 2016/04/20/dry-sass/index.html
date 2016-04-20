@@ -1,0 +1,653 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="CSS,Front-End,Preprocessors,SASS," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Matt O'Connell: Blog" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="Lean and DRY CSS using SassI recently attempting to recreate a bare-bones Bootstrap-like grid system for a project and started delving a little deeper into the compilation process behind Sass. It’s ea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lean and DRY CSS using Sass">
+<meta property="og:url" content="http://yoursite.com/2016/04/20/dry-sass/index.html">
+<meta property="og:site_name" content="Matt O'Connell: Blog">
+<meta property="og:description" content="Lean and DRY CSS using SassI recently attempting to recreate a bare-bones Bootstrap-like grid system for a project and started delving a little deeper into the compilation process behind Sass. It’s ea">
+<meta property="og:updated_time" content="2016-04-20T23:40:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lean and DRY CSS using Sass">
+<meta name="twitter:description" content="Lean and DRY CSS using SassI recently attempting to recreate a bare-bones Bootstrap-like grid system for a project and started delving a little deeper into the compilation process behind Sass. It’s ea">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Lean and DRY CSS using Sass | Matt O'Connell: Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Matt O'Connell: Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            Tags
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Lean and DRY CSS using Sass
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2016-04-20T17:43:16-04:00" content="2016-04-20">
+            2016-04-20
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Programming/" itemprop="url" rel="index">
+                  <span itemprop="name">Programming</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="Lean_and_DRY_CSS_using_Sass">Lean and DRY CSS using Sass</h2><p>I recently attempting to recreate a bare-bones Bootstrap-like grid system for a project and started delving a little deeper into the compilation process behind Sass. It’s easy enough to create a DRY Sass codebase but a bit more difficult to ensure that it translates into a DRY (and therefore smaller) CSS file. Using the right combination of mixins, placeholders and <code>@extend</code> can help here.</p>
+<h2 id="Mixins">Mixins</h2><p>Mixins are a primary feature of CSS preprocessors and indispensable assets for creating a DRY codebase. They allow you to avoid using non-semantic tags like <code>.align-left</code>. They are function-like in that they can accept variables, process them, and return new data. They technically don’t return a value, but rather they dump CSS content into place.</p>
+<p>Declaration example:<br><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">=<span class="function"><span class="title">square</span><span class="params">(<span class="variable">$dimension</span>: <span class="number">100%</span>)</span></span></span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">$dimension</span></span><br><span class="line">    <span class="attribute">height</span>: <span class="variable">$dimension</span></span><br></pre></td></tr></table></figure></p>
+<p>The above example illustrates a square mixin that takes a <code>$dimension</code> parameter and injects two properties: <code>width</code> and <code>height</code>. You can assign a default value (in this case we’re using <code>100%</code>.) The default value is used if no argument is supplied at the time the mixin is used. </p>
+<p>Usage example:<br><figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.my-200px-square-div</span></span><br><span class="line">    +<span class="function"><span class="title">sq</span><span class="params">(<span class="number">200px</span>)</span></span></span><br><span class="line">    </span><br><span class="line"><span class="class">.my-100-percent-square-div</span></span><br><span class="line">    +sq <span class="comment">// no arguments, use default value</span></span><br></pre></td></tr></table></figure></p>
+<p>Compiled CSS<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.my-200px-square-div</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.my-100-percent-square-div</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Placeholders">Placeholders</h2><p>Placeholders are <em>very</em> similar to mixins. They also provide the capability to inject chunks of CSS into your code. The main difference is you can’t pass variables to placeholders. You would not be able to create the same functionality as the <code>square</code> mixin above with placeholders.</p>
+<p>Declaration example:</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line">%<span class="attribute">vertical-align</span></span><br><span class="line">    <span class="attribute">position</span><span class="value">: relative</span><br><span class="line">    top: <span class="number">50%</span></span><br><span class="line">    transform: <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span><br></pre></td></tr></table></figure>
+<p>Usage example:</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="class">.div-1</span></span><br><span class="line">    <span class="at_rule">@<span class="keyword">extend</span> %vertical-align</span><br><span class="line">    <span class="preprocessor"></span><br><span class="line">.div2</span></span><br><span class="line">    @<span class="keyword">extend</span> %vertical-align</span></span><br></pre></td></tr></table></figure>
+<p>So, why would we bother using placeholders when we could just define a mixin with no parameters? The answer lies in the <code>@extend</code> function and the resulting compilation process. Placeholders are more efficiently compiled. Since they are not dependent upon context-specific variables, our preprocessor can optimize our final CSS code and avoid repetition. See below:</p>
+<p>Compiled CSS<br><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.div1</span>, <span class="class">.div2</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>If we use a mixin for <code>=vertical-align</code> instead, we would get this:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.div1</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.div2</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> relative</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">translateY</span>(-<span class="number">50%</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Always choose to define a set of properties as a placeholder when they stay the same regardless of the context in which they are used. If you need to pass in variables that vary depending on the context, use a mixin.</p>
+<h2 id="@Extend">@Extend</h2><p>We used <code>@extend</code> in our example above. This is actually how we are avoiding the code from duplicating in the compiled stylesheet. <code>@extend</code> can be used to include static, reusable properties somewhere else in code. In our case this happens to be a placeholder. <code>@extend</code> can also be used on classes to DRY out our code.</p>
+<p>As an example, we can create a <code>button</code> class. We want to create two alternate versions of our <code>button</code> class. We want both sub-classes to share the properties of the <code>button</code> class but also add their own. Also, we want to do this in the most efficient way possible without duplicating code in the processed stylesheet. Our two classes will be <code>button-rounded</code> (a button with rounded corners) and <code>button-shadowed</code> (a button with a box shadow.) We could nest the properties like so:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span></span><br><span class="line">    <span class="attribute">color</span>: green</span><br><span class="line">    <span class="attribute">background</span>: <span class="hexcolor">#fff</span></span><br><span class="line">    </span><br><span class="line">    &amp;<span class="class">.button-rounded</span></span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">10px</span></span><br><span class="line">     </span><br><span class="line">    &amp;<span class="class">.button-shadowed</span></span><br><span class="line">        <span class="attribute">box-shadow</span>: <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span><br></pre></td></tr></table></figure>
+<p>But, every time we want to create a <code>button-rounded</code> element, we’d have to assign it two classes: <code>button</code> and <code>button-rounded</code>. A better option would be to extend the <code>button</code> class into the alternate buttons like so:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span></span><br><span class="line">    <span class="attribute">color</span>: green</span><br><span class="line">    <span class="attribute">background</span>: <span class="hexcolor">#fff</span></span><br><span class="line">    </span><br><span class="line"><span class="class">.button-rounded</span></span><br><span class="line">    <span class="at_rule">@extend</span> <span class="class">.button</span></span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span></span><br><span class="line">    </span><br><span class="line"><span class="class">.button-shadowed</span></span><br><span class="line">    <span class="at_rule">@extend</span> <span class="class">.button</span></span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span><br></pre></td></tr></table></figure>
+<p>Compiled:</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.button</span>, <span class="class">.button-rounded</span>, <span class="class">.button-shadowed</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">color</span>:<span class="value"> green</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#fff</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.button-rounded</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="class">.button-shadowed</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">1px</span> <span class="number">1px</span> <span class="number">1px</span> black</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Ahh, that’s better. We can now use <code>.button</code>, <code>.button-rounded</code>, or <code>.button-shadowed</code> individually. The compiled CSS has been optimized to group selectors with the same properties, resulting in a smaller stylesheet.</p>
+<p>How do we know whether we should be extending <code>.classes</code> vs. <code>%placeholders</code>? <code>%placeholders</code> are like sass variables in the respect that they are not explicitly included in the final stylesheet. If we assign a variable in our Sass but don’t use it anywhere, you will not find it in the post-processed CSS. The same goes for placeholders. So, we should <code>@extend</code> classes when we are using the class on it’s own somewhere. In our button example, we are planning to apply the plain <code>.button</code> class to an element somewhere in our markup. If we were only planning on using <code>.button-rounded</code> and <code>.button-shadowed</code> in our markup but not actually the plain <code>.button</code> class anywhere, we would have defined <code>button</code> as a <code>%placeholder</code> instead.</p>
+<h2 id="Conclusion">Conclusion</h2><p>Always use <code>@extend</code> with a <code>.class</code> or <code>%placeholder</code> if we want to duplicate non-dynamic properties. This will result in a lighter post-processed CSS stylesheet. <code>@extend</code> classes if the extensible class will be used on its own, otherwise use a <code>%placeholder</code>.</p>
+<p>Mixins are duplicated in processed CSS and should be used only when necessary. When are they necessary? They are necessary only when we need to pass in a variable as an argument.</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag">#CSS</a>
+          
+            <a href="/tags/Front-End/" rel="tag">#Front-End</a>
+          
+            <a href="/tags/Preprocessors/" rel="tag">#Preprocessors</a>
+          
+            <a href="/tags/SASS/" rel="tag">#SASS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/23/Hexidecimal/" rel="next">Decimal, Binary, and Hexadecimal</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Matt O'Connell" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Matt O'Connell</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/matt-oconnell" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/mattb0t" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/mattoconnell408" target="_blank">LinkedIn</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lean_and_DRY_CSS_using_Sass"><span class="nav-number">1.</span> <span class="nav-text">Lean and DRY CSS using Sass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mixins"><span class="nav-number">2.</span> <span class="nav-text">Mixins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Placeholders"><span class="nav-number">3.</span> <span class="nav-text">Placeholders</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#@Extend"><span class="nav-number">4.</span> <span class="nav-text">@Extend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Matt O'Connell</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
